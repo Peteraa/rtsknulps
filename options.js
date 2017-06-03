@@ -1,31 +1,5 @@
 // options.js
 
-// Saves options to chrome.storage
-function save_query() {
-  // Get the values to save
-  var first = document.getElementById('first').value;
-  var last = document.getElementById('last').value;
-  var name = document.getElementById('name').value;
-
-  // build a query container
-  var query = {
-    'first': first,
-    'last': last,
-    'name': name
-  };
-
-  chrome.storage.sync.get({
-    list: 'No queries saved',
-  }, function (data) {
-    query_list = data.list;
-    if (query_list == 'No queries saved'){
-      // No list is saved, so we create one
-      query_list = new Array();
-    }
-    update_queryList(query_list, query);
-  });
-}
-
 // update query_list and save
 function update_queryList(query_list, query){
   query_list.push(query);
@@ -118,7 +92,6 @@ function remove_selected() {
   });
 }
 
-document.getElementById('save').addEventListener('click', save_query);
 document.getElementById('check').addEventListener('click', check_options);
 document.getElementById('clear').addEventListener('click', clear_options);
 document.getElementById('remove_selected').addEventListener('click', remove_selected);
