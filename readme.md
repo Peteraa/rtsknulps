@@ -17,7 +17,7 @@ Ex. Grab and edit "long splunk query containing my variable user name rest of qu
 Add $$$ on either side of your variable resulting in: "long splunk query containing my variable $$$user name$$$ rest of query.
 
 
-install
+Install
 -------
 The plan is to get Splunkstr into the chrome web store as a free and open source extension, but until then you can install this extension manually in developer mode.
 
