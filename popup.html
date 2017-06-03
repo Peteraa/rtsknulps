@@ -3,11 +3,12 @@
 
 <head>
   <title>Splunkstr</title>
+  <link rel="stylesheet" type="text/css" href="splunkstr_style.css">
 </head>
 
 <body>
   <h1>Splunkstr</h1>
-  This popup can help you save Splunk queries to Splunkstr where only one field vary.<br>
+  <p>This popup can help you save Splunk queries to Splunkstr where only one field vary.<br>
   Its a simple proces.<br>
   1.) Grab the query using the "Grab query button".<br>
   2.) Mark your variable using $$$ on either side.<br>
@@ -17,34 +18,18 @@
   The query then looks like long_splunk_query_containing_my_variable_$$$user_name$$$_rest_of_query.<br>
   Finally press "Save query".<br>
   To manage your queries for Splunkstr go to chrome://extensions/ and click on "Options".<br>
-  <br>
-  Now you try it!<br>
-  <button id="grab_query_button">Grab query</button><br>
+</p>
+  <p class="label">Now you try it!</p>
+  <button id="grab_query_button">Grab query</button>
   <div id="query_space" style="width:800px"></div>
-  query:<br>
+  <p>Query:</p>
   <input type="text" id="query_input" style="width:100%"><br>
-  Name:<br>
+  <p>Name your new Splunkstr query:</p>
   <input type="text" id="name_input" style="width:100%"><br>
   <button id="save_query_button">Save query</button><br>
   <div id="task_status"></div>
-  <!--
-  TO DO CREATE OWN QUERIES
-  <br/>
-  Name:<br/>
-  <input type="text" id="name" style="width:600px">
-  First part of query:<br/>
-  <input type="text" id="first" style="width:600px">
-  Last part of query:<br/>
-  <input type="text" id="last" style="width:600px">
-  <br/>
-  <button id="save">Save</button><button id="check">Check</button><button id="clear">Clear</button>
-  <div id="task_status"></div>
-  <div id="debug"></div>
-  <div id="list"></div><button id="remove_selected">Remove selected</button>
 
-  -->
   <script src="popup.js"></script>
-  <!-- TO DO create function to capture search and save it -->
 </body>
 
 </html>
