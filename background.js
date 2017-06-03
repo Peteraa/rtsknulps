@@ -10,9 +10,7 @@ function getBaseUrl(query) {
   // console.log(info.selectionText)
   base_url = chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
     var url = tabs[0].url;
-    console.log(url);
     base_url = url.match(/^https:\/\/[a-z0-9,-._:]{2,300}\/[a-zA-Z-]{5}\/app\/[a-z0-9,-._:]{1,300}\//g);
-    console.log(base_url);
     openNewTab(query, base_url);
     });
 }
