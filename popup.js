@@ -6,7 +6,6 @@ function grab_query_from_url() {
 }
 
 function get_base_url(query) {
-
   // get url
   chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
     var url = tabs[0].url;
@@ -73,6 +72,8 @@ function save_query_list(query_list){
   // set query_list
   chrome.storage.sync.set({list:query_list}, function () {
     set_status('Query saved.');
+    helper.updateContextMenu();
+    console.log('HIT');
   });
 }
 
