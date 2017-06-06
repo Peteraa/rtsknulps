@@ -22,5 +22,12 @@ var helper = {
         }
       }
     });
+  },
+  setStatus: function(message) {
+    var status = document.getElementById('task_status');
+    status.textContent = message;
+    setTimeout(function () {
+      status.textContent = '';
+    }, 4000);
   }
 }

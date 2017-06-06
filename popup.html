@@ -21,12 +21,15 @@
 </p>
   <p class="label">Now you try it!</p>
   <button id="grab_query_button">Grab query</button>
-  <div id="query_space" style="width:800px"></div>
+
   <p>Query:</p>
   <input type="text" id="query_input" style="width:100%"><br>
   <p>Name your new Splunkstr query:</p>
   <input type="text" id="name_input" style="width:100%"><br>
   <button id="save_query_button">Save query</button><br>
+  <p>Manage queries:</p>
+  <button id="clear_saved_queries_button">Clear saved queries</button><br>
+  <div id="saved_queries"></div><button id="remove_selected">Remove selected</button>
   <div id="task_status"></div>
 
   <script src="helper.js"></script>
