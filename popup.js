@@ -64,15 +64,7 @@ function save_query(first, last, name) {
 // update query_list and save
 function update_queryList(query_list, query){
   query_list.push(query);
-  save_query_list(query_list);
-}
-
-function save_query_list(query_list){
-  // set query_list
-  chrome.storage.sync.set({list:query_list}, function () {
-    set_status('Query saved.');
-    helper.updateContextMenu();
-  });
+  helper.save_query_list(query_list);
 }
 
 // set status
@@ -103,7 +95,10 @@ function remove_selected() {
       console.log('Trying to remove: ' + option_selected);
 
       // save updated list
-      save_query_list(query_list);
+      helper.save_query_list(query_list);
+
+      showUpdatedQueryList();
+      helper.updateContextMenu();
 
       // tell user its removed
       set_status('Query removed successfully.');
@@ -115,36 +110,42 @@ function remove_selected() {
   If there are saved queries in chrome storage
   then show them to the user.
 */
-chrome.storage.sync.get({
-  list: 'No queries saved',
-}, function (data) {
-  query_list = data.list;
-  // check if list is empty
-  var list_div = document.getElementById('saved_queries');
-  if (query_list == 'No queries saved'){
-    console.log('No list present');
-    list_div.innerHTML = '';
-  } else {
-    if (query_list.length < 1) {
-      console.log('List is empty');
+function showUpdatedQueryList () {
+  chrome.storage.sync.get({
+    list: 'No queries saved',
+  }, function (data) {
+    query_list = data.list;
+    // check if list is empty
+    var list_div = document.getElementById('saved_queries');
+    if (query_list == 'No queries saved'){
+      console.log('No list present');
+      list_div.innerHTML = '';
     } else {
-      var html = '<select id="selection">';
-      for (i = 0; i < query_list.length; i++) {
-         html += '<option value="' + i + '">'  + query_list[i].name + '</option>';
+      if (query_list.length < 1) {
+        console.log('List is empty');
+      } else {
+        var html = '<select id="selection">';
+        for (i = 0; i < query_list.length; i++) {
+           html += '<option value="' + i + '">'  + query_list[i].name + '</option>';
+        }
+        html += '</select>';
+        list_div.innerHTML = html;
       }
-      html += '</select>';
-      list_div.innerHTML = html;
     }
-  }
-});
+  });
+}
 
 function clearSavedQueries() {
   // clear saved queries
   chrome.storage.sync.clear();
   var list_div = document.getElementById('saved_queries');
   list_div.innerHTML = '';
+  helper.buildInitialEsSearches();
+  helper.updateContextMenu();
   helper.setStatus('Options cleared successfully.');
 }
+
+showUpdatedQueryList();
 
 document.getElementById('remove_selected').addEventListener('click', remove_selected);
 document.getElementById('clear_saved_queries_button').addEventListener('click', clearSavedQueries);
