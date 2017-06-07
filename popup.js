@@ -1,11 +1,13 @@
 // popup.js
 
-// save query from url
-function grab_query_from_url() {
-  get_base_url();
-}
+/*
+  The purpose of this file is to provide the functionality
+  the popup the user interacts with when clicking the
+  Splunkstr icon
+*/
 
-function get_base_url(query) {
+// save query from url
+function grab_query_from_url(query) {
   // get url
   chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
     var url = tabs[0].url;
@@ -17,6 +19,7 @@ function get_base_url(query) {
   });
 }
 
+// save the query the user build from her URL
 function save_query_from_url() {
   // Get url
   var query_input = document.getElementById('query_input').value;
@@ -27,7 +30,7 @@ function save_query_from_url() {
   // Remove base_url
   var query = query_input.replace(/^https:\/\/[a-z0-9,-._:]{2,300}\/[a-zA-Z-]{5}\/app\/[a-zA-Z]{1,300}\//g,'');
 
-  // Extract query
+  // Extract query and save query
   var split_query = query.split('$$$');
   if (split_query.length == 3) {
     var first = split_query[0];
@@ -37,18 +40,23 @@ function save_query_from_url() {
     var first = split_query[0];
     var last = '';
     save_query(first, last, name);
+  } else {
+    // Do nothing
   }
 }
 
 // Saves options to chrome.storage
 function save_query(first, last, name) {
 
+  // build query object
   var query = {
     'first': first,
     'last': last,
     'name': name
   };
 
+  // get existing list and add the new query
+  // then save to storage
   chrome.storage.sync.get({
     list: 'No queries saved',
   }, function (data) {
@@ -67,15 +75,7 @@ function update_queryList(query_list, query){
   helper.save_query_list(query_list);
 }
 
-// set status
-function set_status(message) {
-  var status = document.getElementById('task_status');
-  status.textContent = message;
-  setTimeout(function () {
-    status.textContent = '';
-  }, 4000);
-}
-
+// Remove selected query from chrome storage
 function remove_selected() {
   // get list
   chrome.storage.sync.get({
@@ -84,7 +84,7 @@ function remove_selected() {
     query_list = data.list;
     if (query_list == 'No queries saved'){
       console.log('No list present');
-      set_status('List is empty.');
+      helper.set_status('List is empty.');
     } else {
       // get option selected (position)
       var selection = document.getElementById("selection");
@@ -97,11 +97,11 @@ function remove_selected() {
       // save updated list
       helper.save_query_list(query_list);
 
-      showUpdatedQueryList();
-      helper.updateContextMenu();
+      show_updated_query_list();
+      helper.update_context_menu();
 
       // tell user its removed
-      set_status('Query removed successfully.');
+      helper.set_status('Query removed successfully.');
       }
   });
 }
@@ -110,7 +110,7 @@ function remove_selected() {
   If there are saved queries in chrome storage
   then show them to the user.
 */
-function showUpdatedQueryList () {
+function show_updated_query_list () {
   chrome.storage.sync.get({
     list: 'No queries saved',
   }, function (data) {
@@ -135,19 +135,25 @@ function showUpdatedQueryList () {
   });
 }
 
-function clearSavedQueries() {
+// clear all saved queries
+function clear_saved_queries() {
   // clear saved queries
   chrome.storage.sync.clear();
   var list_div = document.getElementById('saved_queries');
   list_div.innerHTML = '';
-  helper.buildInitialEsSearches();
-  helper.updateContextMenu();
-  helper.setStatus('Options cleared successfully.');
+  helper.build_initial_ES_searches();
+  helper.update_context_menu();
+  helper.set_status('Options cleared successfully.');
 }
 
-showUpdatedQueryList();
+/*
+  If there are saved queries in chrome storage
+  then show them to the user on the popup.
+*/
+show_updated_query_list();
 
+// adding eventlisteners
 document.getElementById('remove_selected').addEventListener('click', remove_selected);
-document.getElementById('clear_saved_queries_button').addEventListener('click', clearSavedQueries);
+document.getElementById('clear_saved_queries_button').addEventListener('click', clear_saved_queries);
 document.getElementById('grab_query_button').addEventListener('click', grab_query_from_url);
 document.getElementById('save_query_button').addEventListener('click', save_query_from_url);

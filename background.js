@@ -1,23 +1,27 @@
 // background.js
 
-function openNewTab(query, base_url) {
+/*
+  The purpose of this file is to provide the long running task_status
+  like when the user is interacting with the context (right-click) menu.
+*/
+
+function open_new_tab(query, base_url) {
   chrome.tabs.create({
     url: base_url + query,
   });
 }
 
-function getBaseUrl(query) {
-  // console.log(info.selectionText)
+function get_base_url(query) {
   base_url = chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
     var url = tabs[0].url;
     base_url = url.match(/^https:\/\/[a-z0-9,-._:]{2,300}\/[a-zA-Z-]{5}\/app\/[a-z0-9,-._:]{1,300}\//g);
-    openNewTab(query, base_url);
+    open_new_tab(query, base_url);
     });
 }
 
 // When a user click a context menu item (right click menu)
 // we handle it according to menuItemId
-function menuClicked(info,tab) {
+function menu_clicked(info,tab) {
   execute_query_with_id(info, info.menuItemId);
 }
 
@@ -32,7 +36,7 @@ function execute_query_with_id(info, id) {
     } else {
       query_item = query_list[id];
       query = query_item.first + info.selectionText + query_item.last;
-      getBaseUrl(query);
+      get_base_url(query);
     }
   });
 }
@@ -45,7 +49,7 @@ chrome.storage.sync.get({
   if (query_list == 'No queries saved'){
     console.log('No list present')
 
-    helper.buildInitialEsSearches();
+    helper.build_initial_ES_searches();
 
     for (i = 0; i < query_list.length; i++) {
       query = query_list[i];
@@ -56,7 +60,7 @@ chrome.storage.sync.get({
         "id":i.toString(),
       });
     }
-    
+
   } else {
 
     for (i = 0; i < query_list.length; i++) {
@@ -72,4 +76,4 @@ chrome.storage.sync.get({
 });
 
 // add listener to custom context menu (right click menu)
-chrome.contextMenus.onClicked.addListener(menuClicked);
+chrome.contextMenus.onClicked.addListener(menu_clicked);

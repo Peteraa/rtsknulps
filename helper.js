@@ -1,7 +1,13 @@
 // helper.js
 
+/*
+  The purpose of this file is to house code shared between
+  the other .js files.
+*/
+
 var helper = {
-  updateContextMenu: function () {
+  // update the right-click menu
+  update_context_menu: function () {
     chrome.storage.sync.get({
       list: 'No queries saved',
       }, function (data) {
@@ -24,7 +30,8 @@ var helper = {
       }
     });
   },
-  setStatus: function (message) {
+  // show feedback message to user
+  set_status: function (message) {
     var status = document.getElementById('task_status');
     status.textContent = message;
     setTimeout(function () {
@@ -34,12 +41,12 @@ var helper = {
   save_query_list: function (query_list) {
     // set query_list
     chrome.storage.sync.set({list:query_list}, function () {
-      set_status('Query saved.');
-      showUpdatedQueryList();
-      helper.updateContextMenu();
+      helper.set_status('Query saved.');
+      show_updated_query_list();
+      helper.update_context_menu();
     });
   },
-  buildInitialEsSearches: function () {
+  build_initial_ES_searches: function () {
     var query_list = new Array();
 
     first = 'search?q=%7C%20%60reverse_asset_lookup(';
