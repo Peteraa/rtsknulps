@@ -32,7 +32,7 @@ function execute_query_with_id(info, id) {
     query_list = data.list;
     // check if list is empty
     if (query_list == 'No queries saved'){
-      console.log('No list present')
+      console.log('No list present');
     } else {
       query_item = query_list[id];
       query = query_item.first + info.selectionText + query_item.last;
@@ -48,18 +48,23 @@ chrome.storage.sync.get({
   // check if list is empty
   if (query_list == 'No queries saved'){
     console.log('No list present')
-
     helper.build_initial_ES_searches();
 
-    for (i = 0; i < query_list.length; i++) {
-      query = query_list[i];
+    chrome.storage.sync.get({
+      list: 'No queries saved',
+      }, function (data) {
 
-      chrome.contextMenus.create({
-        title: query.name,
-        contexts:["selection"],
-        "id":i.toString(),
-      });
-    }
+      query_list = data.list;
+      for (i = 0; i < query_list.length; i++) {
+        query = query_list[i];
+
+        chrome.contextMenus.create({
+          title: query.name,
+          contexts:["selection"],
+          "id":i.toString(),
+        });
+      }
+    });
 
   } else {
 

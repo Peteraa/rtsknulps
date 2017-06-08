@@ -33,16 +33,21 @@ var helper = {
   // show feedback message to user
   set_status: function (message) {
     var status = document.getElementById('task_status');
-    status.textContent = message;
-    setTimeout(function () {
-      status.textContent = '';
-    }, 4000);
+    if (status != null) {
+      status.textContent = message;
+      setTimeout(function () {
+        status.textContent = '';
+      }, 4000);
+    }
   },
   save_query_list: function (query_list) {
     // set query_list
     chrome.storage.sync.set({list:query_list}, function () {
       helper.set_status('Query saved.');
-      show_updated_query_list();
+      var list_div = document.getElementById('saved_queries');
+      if (list_div != null) {
+        show_updated_query_list();
+      }
       helper.update_context_menu();
     });
   },
