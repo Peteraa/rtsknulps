@@ -141,7 +141,6 @@ function clear_saved_queries() {
   chrome.storage.sync.clear();
   var list_div = document.getElementById('saved_queries');
   list_div.innerHTML = '';
-  helper.build_initial_ES_searches();
   helper.update_context_menu();
   helper.set_status('Options cleared successfully.');
 }
@@ -152,8 +151,13 @@ function clear_saved_queries() {
 */
 show_updated_query_list();
 
+function add_default_ES_queries() {
+    helper.build_initial_ES_searches();
+}
+
 // adding eventlisteners
 document.getElementById('remove_selected').addEventListener('click', remove_selected);
 document.getElementById('clear_saved_queries_button').addEventListener('click', clear_saved_queries);
 document.getElementById('grab_query_button').addEventListener('click', grab_query_from_url);
 document.getElementById('save_query_button').addEventListener('click', save_query_from_url);
+document.getElementById('add_default_ES_queries').addEventListener('click', add_default_ES_queries);
