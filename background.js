@@ -49,22 +49,16 @@ chrome.storage.sync.get({
   if (query_list == 'No queries saved'){
     console.log('No list present')
   } else {
+
+    chrome.contextMenus.removeAll();
     for (i = 0; i < query_list.length; i++) {
       query = query_list[i];
 
-      try {
-        chrome.contextMenus.create({
-          title: query.name,
-          contexts:["selection"],
-          "id":i.toString(),
-        });
-      } catch(err) {
-        chrome.contextMenus.update({
-          title: query.name,
-          contexts:["selection"],
-          "id":i.toString(),
-        });
-      }
+      chrome.contextMenus.create({
+        title: query.name,
+        contexts:["selection"],
+        "id":i.toString(),
+      });
     }
   }
 });
