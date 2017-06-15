@@ -14,7 +14,7 @@ function open_new_tab(query, base_url) {
 function get_base_url(query) {
   base_url = chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
     var url = tabs[0].url;
-    base_url = url.match(/^https:\/\/[a-z0-9,-._:]{2,300}\/[a-zA-Z-]{5}\/app\/[a-z0-9,-._:]{1,300}\//g);
+    base_url = url.match(/^https:\/\/[A-Za-z0-9,-._:]{2,300}\/[a-zA-Z-]{5}\/app\/[A-Za-z0-9,-._:]{1,300}\//g);
     open_new_tab(query, base_url);
     });
 }
