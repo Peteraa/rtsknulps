@@ -1,4 +1,4 @@
-Splunkstr - customizable chrome extension for Splunk work
+Rtsknulps - customizable chrome extension for Splunk work
 ====================================================
 
 The purpose of this chrome extension is to help analysts using Splunk, by enabling them to access their favorite queries by selecting some text and picking a saved query from the right click menu.
@@ -8,7 +8,7 @@ It works by grabbing an active Splunk query using the url from an active Splunk 
 Usage
 -----
 
-1. Grab the query using the "Grab query button" accessible from the Splunkstr icon in the toolbar.
+1. Grab the query using the "Grab query button" accessible from the Rtsknulps icon in the toolbar.
 1. Locate and mark your variable in the query url using $$$ on either side.
 1. Name your query.
 1. Save using the "Save query button".
@@ -19,7 +19,7 @@ Add $$$ on either side of your variable resulting in: "long splunk query contain
 
 Install
 -------
-The plan is to get Splunkstr into the chrome web store as a free and open source extension, but until then you can install this extension manually in developer mode.
+The plan is to get Rtsknulps into the chrome web store as a free and open source extension, but until then you can install this extension manually in developer mode.
 
 Here is how to do it:
 1. Download as ZIP from Github and extract it.
